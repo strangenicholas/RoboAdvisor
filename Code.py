@@ -146,18 +146,18 @@ def get_age(age):
     return age.replace(" ", "")
 
 
-# Exception check gender
-def get_gender(gender):
+# Exception check sex
+def get_sex(sex):
     # Checks for non-whitespace characters in the original input
-    if gender.isspace() is False:
+    if sex.isspace() is False:
 
         # Removes whitespace entered
-        gender = gender.replace(" ", "")
+        sex = sex.replace(" ", "")
 
         # Sets length parameters on the input
-        while len(gender) != 1:
-            gender = input("Please enter your gender with 'm' for male or 'f' for female: ")
-            return get_gender(gender)
+        while len(sex) != 1:
+            sex = input("Please enter your sex with 'm' for male or 'f' for female: ")
+            return get_sex(sex)
 
         # Outlines all forbidden characters
         forbidden_characters = ['A', 'a', 'B', 'b', 'C', 'c', 'D', 'd', 'E', 'e', 'G', 'g', 'H', 'h',
@@ -167,24 +167,24 @@ def get_gender(gender):
                                 '=', '+', '[', '{', ']', '}', '\\', '|', ';', ':', '"', ',', '<', '.', '>', '/', '?',
                                 '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', "'"]
 
-        # Checks the gender against the forbidden characters
-        for character in gender:
+        # Checks the sex against the forbidden characters
+        for character in sex:
             if character in forbidden_characters:
-                gender = input("""Please enter your gender with "m" for male or "f" for female: """)
-                return get_gender(gender)
+                sex = input("""Please enter your sex with "m" for male or "f" for female: """)
+                return get_sex(sex)
 
         # Checks for whitespace with the new inputs
-        if gender.isspace() is True:
-            gender = input("""Please enter your gender with "m" for male or "f" for female: """)
-            return get_gender(gender)
+        if sex.isspace() is True:
+            sex = input("""Please enter your sex with "m" for male or "f" for female: """)
+            return get_sex(sex)
 
     # Corrects for whitespace in the original inputs
     else:
-        gender = input("""Please enter your gender with "m" for male or "f" for female: """)
-        return get_gender(gender)
+        sex = input("""Please enter your sex with "m" for male or "f" for female: """)
+        return get_sex(sex)
 
     # Standardizes the return
-    return gender.upper()
+    return sex.upper()
 
 
 # Exception check retirement age
@@ -238,10 +238,10 @@ def get_retirement_age(retirement_age):
 
 # Determines total life expectancy using inputs and table
 # The table is from https://www.ssa.gov/oact/STATS/table4c6.html
-def life_expectancy(gender, age):
-    if gender == "M":
+def life_expectancy(sex, age):
+    if sex == "M":
         return male_life_expectancy[age] + age
-    if gender == "F":
+    if sex == "F":
         return female_life_expectancy[age] + age
 
 
@@ -358,11 +358,11 @@ self_age = input("How old are you (rounded to the nearest whole year): ")
 correct_self_age = int(self_age.replace(self_age, f"{get_age(self_age)}"))
 # print(correct_self_age)
 
-# Retrieves gender
-self_gender = input("""What is your gender (enter "m" for male or "f" for female): """)
+# Retrieves sex
+self_sex = input("""What is your sex (enter "m" for male or "f" for female): """)
 # Exception checks and updates input
-correct_self_gender = self_gender.replace(self_gender, f"{get_gender(self_gender)}")
-# print(correct_self_gender)
+correct_self_sex = self_sex.replace(self_sex, f"{get_sex(self_sex)}")
+# print(correct_self_sex)
 
 # Retrieves retirement age
 self_retirement_age = input("Please enter your desired retirement age: ")
@@ -415,7 +415,7 @@ print("One moment while we calculate your optimal asset allocation.")
 # Gives program a more human feel
 time.sleep(3)
 print("Hi", correct_first_name, correct_last_name)
-print("Based on your life expectancy of", life_expectancy(correct_self_gender, correct_self_age), "years")
+print("Based on your life expectancy of", life_expectancy(correct_self_sex, correct_self_age), "years")
 print("We suggest you invest", stock_allocation(yrs_to_retirement), "% in stocks,", bond_allocation(yrs_to_retirement),
       "% in bonds, and", cash_allocation(yrs_to_retirement), "% in cash.")
 print("Based on your total income of $", total_income,"and investment percentage of", investment_percentage,
