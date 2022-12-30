@@ -7,13 +7,16 @@ pulling_data = pd.read_html("https://www.ssa.gov/oact/STATS/table4c6.html")
 df = pulling_data[0]
 df.drop([120], inplace=True)
 
+# print all columns of the dataframe
+#print(df.columns.tolist())
+
 # Convert columns from objects to numbers
-df['Exact age'] = df['Exact age'].astype(int)
+df['Exact age'] = df['Exact  age'].astype(int)
 df['Male'] = df['Male'].astype(float)
 df['Female'] = df['Female'].astype(float)
 
-df_male = df["Male", "Life expectancy"]
-df_female = df["Female", "Life  expectancy"]
+df_male = df['Male', 'Life  expectancy']
+df_female = df['Female', 'Life  expectancy']
 
 male_life_expectancy = df_male.to_dict()
 female_life_expectancy = df_female.to_dict()
