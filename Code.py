@@ -376,33 +376,35 @@ correct_self_retirement_age = int(self_retirement_age.replace(self_retirement_ag
 # Retrieves income
 current_income = int(input('Please enter your current gross income (rounded to the nearest USD): '))
 
-#Retrieves marital status
-marital_status = input('Are you currently married? (y,n): ')
-
-# Retrieves spouses income
-if marital_status == 'y':
-    spouses_current_income = int(input('Please enter your spouses current gross income (rounded to the nearest USD): '))
-
 # Retrieves number of children
-children = input('How many children do you have/ plan to have?: ')
+children = input('Do you currently have children? (y/n): ')
 
 # Retrieves target savings goal
 retirement_goal = int(input('Please enter your retirement savings goal rounded to the nearest USD: '))
 
-# Retrieves house status
+# Retrieves current retirement savings
+current_savings =int(input('Please enter your current retirement savings amount rounded to the nearest USD: '))
 
-# Total Income
-if spouses_current_income > 0:
-    total_income = current_income + spouses_current_income
-else:
-    total_income = current_income
-#print(total_income)
+# Retrieves house status
+housing = input('Do you currently own a home? (y,n):')
+if housing == 'y':
+    mortgage_rate = int(input('What is your current interest rate?'))
+
+
+
+# If has 401k, Retrieves 401k % match
+company_401k = input('Does your company offer a 401k? (y,n):')
+if company_401k == 'y':
+    company_match =int(input('How much does the company match?'))
+
+# Roth vs Traditional 
+roth_vs_traditional = input('Do you expect to pay more in taxes during retirement than you currently are? (y,n):')
 
 # Investment percentage
 investment_percentage = .15
 
 # Annual Investment
-annual_investment = total_income * investment_percentage
+annual_investment = current_income * investment_percentage
 
 # Determines how many years until retirement
 yrs_to_retirement = correct_self_retirement_age - correct_self_age
@@ -421,8 +423,26 @@ print("Hi", correct_first_name, correct_last_name)
 print("Based on your life expectancy of", life_expectancy(correct_self_sex, correct_self_age), "years")
 print("We suggest you invest", stock_allocation(yrs_to_retirement), "% in stocks,", bond_allocation(yrs_to_retirement),
       "% in bonds, and", cash_allocation(yrs_to_retirement), "% in cash.")
-print("Based on your total income of $", total_income,"and investment percentage of", investment_percentage,
+print("Based on your total income of $", current_income,"and investment percentage of", investment_percentage,
       "%, you will be investing $", annual_investment," annually")
-# $ in stock, $ in bonds, $ in cash
+# at this pace and an average roi of %, we calculate your expected savings at # years old to be $
+# that means you are ahead/behind by $ a year or $ a month
+
+
+# product suggestion
+
+print("Based on your input, we would like to suggest some products to you.")
+# if have kid, offer 529
+if children == 'y':
+    print('We suggest that you start contributing to a 529 plan for your children if you havent done so already')
+# if interest rate higher than today, refinance
+# if company match greater than 0, match up to mactch % or $ annually
+if company_match > 0:
+    print('We suggest you contribute at least ', company_match, 'of your salary annually to your 401k to take advatntage of your company match. ')
+# if roth_vs_traditional == 'y' , then roth 401k/ira
+if roth_vs_traditional == 'y':
+    print('Based on your future tax assumptions, we suggest you take advantage of the ROTH 401k/IRA options.')
+if roth_vs_traditional == 'n':
+    print('Based on your future tax assumptions, we suggest you stick with the Traditional 401k/IRA options.')
 
 
