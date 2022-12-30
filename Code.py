@@ -236,6 +236,54 @@ def get_retirement_age(retirement_age):
     return retirement_age.replace(" ", "")
 
 
+# Exception check current_income
+def get_current_income(current_income):
+    # Checks for non-whitespace characters in the original input
+    if current_income.isspace() is False:
+
+        # Makes sure the amount is entered
+        while len(current_income) == 0:
+            retirement_age = input('Please enter your current gross income (rounded to the nearest USD): ')
+            return get_current_income(current_income)
+
+        # Outlines all forbidden characters
+        forbidden_characters = ['A', 'a', 'B', 'b', 'C', 'c', 'D', 'd', 'E', 'e', 'F', 'f', 'G', 'g', 'H', 'h',
+                                'I', 'i', 'J', 'j', 'K', 'k', 'L', 'l', 'M', 'm', 'N', 'n', 'O', 'o', 'P', 'p',
+                                'Q', 'q', 'R', 'r', 'S', 's', 'T', 't', 'U', 'u', 'V', 'v', 'W', 'w', 'X', 'x',
+                                'Y', 'y', 'Z', 'z', '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')',
+                                '_', '=', '+', '[', '{', ']', '}', '\\', '|', ';', ':', '"', ',', '<', '.', '>', '/',
+                                '?', '-', "'", " "]
+
+        # Checks each element of the age against the forbidden characters
+        for number in current_income:
+            if number in forbidden_characters:
+                current_income = input("Please refrain from entering letters, special characters, or spaces."
+                                       '\nPlease enter your current gross income (rounded to the nearest USD): ')
+                return get_current_income(current_income)
+
+        # Sets lower limit to retirement age
+        if int(current_income) < 0:
+            current_income = input("We are sorry to hear about your situation,"
+                                   "but our calculations only work on positive amounts."
+                                   '\nPlease enter your current gross income (rounded to the nearest USD): ')
+            return get_current_income(current_income)
+
+        # Checks for whitespace with the new inputs
+        if current_income.isspace() is True:
+            current_income = input('Please enter your current gross income (rounded to the nearest USD): ')
+            return get_current_income(current_income)
+
+    # Corrects for whitespace in the original inputs
+    else:
+        current_income = input('Please enter your current gross income (rounded to the nearest USD): ')
+        return get_current_income(current_income)
+
+    # Standardizes the return
+    return current_income.replace(" ", "")
+
+
+
+
 # Part 3:
 # Calculations
 
@@ -346,49 +394,45 @@ print("To get started, we're going to need some personal information.")
 first_name = input("Please enter your first name: ")
 # Exception checks and updates input
 correct_first_name = first_name.replace(first_name, f"{get_first_name(first_name)}")
-# print(correct_first_name)
 
 # Retrieves last name
 last_name = input("Please enter your last name: ")
 # Exception checks and updates input
 correct_last_name = last_name.replace(last_name, f"{get_last_name(last_name)}")
-# print(correct_last_name)
-# print(correct_first_name, correct_last_name)
 
 # Retrieves age
 self_age = input("How old are you (rounded to the nearest whole year): ")
 # Exception checks and updates input
 correct_self_age = int(self_age.replace(self_age, f"{get_age(self_age)}"))
-# print(correct_self_age)
 
 # Retrieves sex
 self_sex = input("""What is your sex (enter "m" for male or "f" for female): """)
 # Exception checks and updates input
 correct_self_sex = self_sex.replace(self_sex, f"{get_sex(self_sex)}")
-# print(correct_self_sex)
 
 # Retrieves retirement age
 self_retirement_age = input("Please enter your desired retirement age: ")
 # Exception checks and updates input
 correct_self_retirement_age = int(self_retirement_age.replace(self_retirement_age, f"{get_retirement_age(self_retirement_age)}"))
-# print(correct_self_retirement_age)
 
 # Retrieves income
-current_income = int(input('Please enter your current gross income (rounded to the nearest USD): '))
+current_income = input('Please enter your current gross income (rounded to the nearest USD): ')
+# Exception checks and updates input
+correct_current_income = int(current_income.replace(current_income, f"{get_current_income(current_income)}"))
 
 # Retrieves number of children
 children = input('Do you currently have children? (y/n): ')
 
 # Retrieves target savings goal
-retirement_goal = int(input('Please enter your retirement savings goal rounded to the nearest USD: '))
+retirement_goal = input('Please enter your retirement savings goal rounded to the nearest USD: ')
 
 # Retrieves current retirement savings
-current_savings =int(input('Please enter your current retirement savings amount rounded to the nearest USD: '))
+current_savings =input('Please enter your current retirement savings amount rounded to the nearest USD: ')
 
 # Retrieves house status
 housing = input('Do you currently own a home? (y,n):')
 if housing == 'y':
-    mortgage_rate = int(input('What is your current interest rate?'))
+    mortgage_rate = input('What is your current interest rate?')
 
 
 
