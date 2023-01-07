@@ -1,5 +1,7 @@
 import pandas as pd
 import time
+from Financial_Calculations import *
+
 
 # PART 1:
 # Pull in the data
@@ -281,7 +283,45 @@ def get_current_income(current_income):
     # Standardizes the return
     return current_income.replace(" ", "")
 
+# Exception check children
+def get_children(children):
+    # Checks for non-whitespace characters in the original input
+    if children.isspace() is False:
 
+        # Removes whitespace entered
+        children = children.replace(" ", "")
+
+        # Sets length parameters on the input
+        while len(children) != 1:
+            children = input("Please enter your child status with 'y' for yes or 'n' for no: ")
+            return get_children(children)
+
+        # Outlines all forbidden characters
+        forbidden_characters = ['A', 'a', 'B', 'b', 'C', 'c', 'D', 'd', 'E', 'e', 'G', 'g', 'H', 'h',
+                                'I', 'i', 'J', 'j', 'K', 'k', 'L', 'l', 'N', 'n', 'O', 'o', 'P', 'p',
+                                'Q', 'q', 'R', 'r', 'S', 's', 'T', 't', 'U', 'u', 'V', 'v', 'W', 'w', 'X', 'x',
+                                'Y', 'y', 'Z', 'z', '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_',
+                                '=', '+', '[', '{', ']', '}', '\\', '|', ';', ':', '"', ',', '<', '.', '>', '/', '?',
+                                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', "'"]
+
+        # Checks the answer against the forbidden characters
+        for character in children:
+            if character in forbidden_characters:
+                children = input("Please enter your child status with 'y' for yes or 'n' for no: ")
+                return get_children(children)
+
+        # Checks for whitespace with the new inputs
+        if children.isspace() is True:
+            children = input("Please enter your child status with 'y' for yes or 'n' for no: ")
+            return get_children(children)
+
+    # Corrects for whitespace in the original inputs
+    else:
+        sex = input("Please enter your child status with 'y' for yes or 'n' for no: ")
+        return get_children(children)
+
+    # Standardizes the return
+    return children.upper()
 
 
 # Part 3:
@@ -422,6 +462,8 @@ correct_current_income = int(current_income.replace(current_income, f"{get_curre
 
 # Retrieves number of children
 children = input('Do you currently have children? (y/n): ')
+# Exception checks and updates input
+correct_children = children.replace(children, f"{get_children(children)}")
 
 # Retrieves target savings goal
 retirement_goal = input('Please enter your retirement savings goal rounded to the nearest USD: ')
@@ -433,8 +475,6 @@ current_savings =input('Please enter your current retirement savings amount roun
 housing = input('Do you currently own a home? (y,n):')
 if housing == 'y':
     mortgage_rate = input('What is your current interest rate?')
-
-
 
 # If has 401k, Retrieves 401k % match
 company_401k = input('Does your company offer a 401k? (y,n):')
@@ -453,7 +493,8 @@ annual_investment = current_income * investment_percentage
 # Determines how many years until retirement
 yrs_to_retirement = correct_self_retirement_age - correct_self_age
 
-
+# Calculate expected roi
+expected_roi = ((stock_allocation * stock_roi) + (bond_allocation * bond_roi))
 
 
 # Part 5:
