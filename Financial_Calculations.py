@@ -2,4 +2,6 @@
 stock_roi = .07
 bond_roi = .05
 
-# Calculate current fv of in
+# Calculate FV of current plan
+
+# Calculate PMT to hit retirement goal
