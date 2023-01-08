@@ -1,6 +1,8 @@
 import pandas as pd
 import time
-from Financial_Calculations import *
+import numpy_financial as np
+#from Financial_Assumptions import *
+
 
 
 # PART 1:
@@ -297,10 +299,10 @@ def get_children(children):
             return get_children(children)
 
         # Outlines all forbidden characters
-        forbidden_characters = ['A', 'a', 'B', 'b', 'C', 'c', 'D', 'd', 'E', 'e', 'G', 'g', 'H', 'h',
-                                'I', 'i', 'J', 'j', 'K', 'k', 'L', 'l', 'N', 'n', 'O', 'o', 'P', 'p',
+        forbidden_characters = ['A', 'a', 'B', 'b', 'C', 'c', 'D', 'd', 'E', 'e', 'F', 'f', 'G', 'g', 'H', 'h',
+                                'I', 'i', 'J', 'j', 'K', 'k', 'L', 'l','M', 'm', 'O', 'o', 'P', 'p',
                                 'Q', 'q', 'R', 'r', 'S', 's', 'T', 't', 'U', 'u', 'V', 'v', 'W', 'w', 'X', 'x',
-                                'Y', 'y', 'Z', 'z', '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_',
+                                 'Z', 'z', '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_',
                                 '=', '+', '[', '{', ']', '}', '\\', '|', ';', ':', '"', ',', '<', '.', '>', '/', '?',
                                 '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', "'"]
 
@@ -469,7 +471,7 @@ correct_children = children.replace(children, f"{get_children(children)}")
 retirement_goal = input('Please enter your retirement savings goal rounded to the nearest USD: ')
 
 # Retrieves current retirement savings
-current_savings =input('Please enter your current retirement savings amount rounded to the nearest USD: ')
+current_savings =int(input('Please enter your current retirement savings amount rounded to the nearest USD: '))
 
 # Retrieves house status
 housing = input('Do you currently own a home? (y,n):')
@@ -479,22 +481,27 @@ if housing == 'y':
 # If has 401k, Retrieves 401k % match
 company_401k = input('Does your company offer a 401k? (y,n):')
 if company_401k == 'y':
-    company_match =int(input('How much does the company match?'))
+    company_match =int(input('How much does the company match (ex: 0.05)?'))
 
 # Roth vs Traditional 
 roth_vs_traditional = input('Do you expect to pay more in taxes during retirement than you currently are? (y,n):')
 
-# Investment percentage
+# Investment Assumptions
 investment_percentage = .15
+stock_roi = .07
+bond_roi = .05
 
 # Annual Investment
-annual_investment = current_income * investment_percentage
+annual_investment = correct_current_income * investment_percentage
 
 # Determines how many years until retirement
 yrs_to_retirement = correct_self_retirement_age - correct_self_age
 
 # Calculate expected roi
-expected_roi = ((stock_allocation * stock_roi) + (bond_allocation * bond_roi))
+expected_roi = ((stock_allocation(yrs_to_retirement) * stock_roi) + (bond_allocation(yrs_to_retirement) * bond_roi))
+
+# Calculate current FV portfolio
+FV_Current = np.fv(expected_roi/12, yrs_to_retirement*12, -annual_investment/12,-current_savings)
 
 
 # Part 5:
@@ -507,9 +514,10 @@ time.sleep(3)
 print("Hi", correct_first_name, correct_last_name)
 print("Based on your life expectancy of", life_expectancy(correct_self_sex, correct_self_age), "years")
 print("We suggest you invest", stock_allocation(yrs_to_retirement), "% in stocks,", bond_allocation(yrs_to_retirement),
-      "% in bonds, and", cash_allocation(yrs_to_retirement), "% in cash.")
-print("Based on your total income of $", current_income,"and investment percentage of", investment_percentage,
+      "% in bonds, and", cash_allocation(yrs_to_retirement), "% in cash. We calculate the ROI of this portfolio to be around",expected_roi,"%.")
+print("Based on your total income of $", correct_current_income,"and investment percentage of", investment_percentage,
       "%, you will be investing $", annual_investment," annually")
+print("Congradulations! We calculate your portfolio balance at retirement to be $",FV_Current)
 # at this pace and an average roi of %, we calculate your expected savings at # years old to be $
 # that means you are ahead/behind by $ a year or $ a month
 
