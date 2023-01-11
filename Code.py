@@ -10,7 +10,7 @@ pulling_data = pd.read_html("https://www.ssa.gov/oact/STATS/table4c6.html")
 df = pulling_data[0]
 df.drop([120], inplace=True)
 
-# print all columns of the dataframe
+#print all columns of the dataframe
 #print(df.columns.tolist())
 
 # Convert columns from objects to numbers
@@ -29,7 +29,7 @@ female_life_expectancy = df_female.to_dict()
 # Part 2:
 # Calculations
 
-# Determines total life expectancy using inputs and table
+# Determines total life expectancy using inputs and table 
 # The table is from https://www.ssa.gov/oact/STATS/table4c6.html
 def life_expectancy(sex, age):
     if sex == "M":
@@ -38,7 +38,7 @@ def life_expectancy(sex, age):
         return female_life_expectancy[age] + age
 
 
-# Using Schwab Estimates:
+# Using Schwab Estimates: #NEED TO AUTOMATE
 # https://www.schwab.wallst.com/Prospect/Research/mutualfunds/overview/solutions.asp?type=targetFunds
 
 # Determines stock allocation based on the number of years until retirement
@@ -127,9 +127,9 @@ def cash_allocation(years_to_retirement):
 # Driver code
 
 # Introduction
-print("Hello and thank you for using our Robo-advisor!")
-# Gives it a human feel
-time.sleep(.5)
+print("Hello and welcome to Automated Financial Advisor")
+# Delay for personal touch
+time.sleep(1)
 print("To get started, we're going to need some personal information.")
 
 # Retrieves first name
@@ -154,7 +154,7 @@ current_income = int(input('Please enter your current gross income (rounded to t
 children = input('Do you currently have children? (y/n): ')
 
 # Retrieves target savings goal
-retirement_goal = input('Please enter your retirement savings goal rounded to the nearest USD: ')
+retirement_goal = int(input('Please enter your retirement savings goal rounded to the nearest USD: '))
 
 # Retrieves current retirement savings
 current_savings =int(input('Please enter your current retirement savings amount rounded to the nearest USD: '))
@@ -187,11 +187,10 @@ annual_investment = current_income * investment_percentage
 yrs_to_retirement = self_retirement_age - self_age
 
 # Calculate expected roi
-expected_roi = ((stock_allocation(yrs_to_retirement) * stock_roi) + (bond_allocation(yrs_to_retirement) * bond_roi))
+expected_roi = ((stock_allocation(yrs_to_retirement) * stock_roi) + (bond_allocation(yrs_to_retirement) * bond_roi))/100
 
 # Calculate current FV portfolio
 FV_Current = np.fv(expected_roi/12 , yrs_to_retirement*12, -annual_investment/12, -current_savings)
-
 
 # Part 5:
 # results
@@ -203,15 +202,19 @@ time.sleep(3)
 print("Hi", first_name, last_name)
 print("Based on your life expectancy of", life_expectancy(self_sex, self_age), "years")
 print("We suggest you invest", stock_allocation(yrs_to_retirement), "% in stocks,", bond_allocation(yrs_to_retirement),
-      "% in bonds, and", cash_allocation(yrs_to_retirement), "% in cash. We calculate the ROI of this portfolio to be around",expected_roi,"%.")
+      "% in bonds, and", cash_allocation(yrs_to_retirement), "% in cash. We calculate the ROI of this portfolio to be around",round(expected_roi*100,2) ,"%.")
 print("Based on your total income of $", current_income,"and investment percentage of", investment_percentage,
       "%, you will be investing $", annual_investment," annually")
-print("Congradulations! We calculate your portfolio balance at retirement to be $",FV_Current)
+print("Wow! We calculate your portfolio balance at retirement to be $",FV_Current)
 # at this pace and an average roi of %, we calculate your expected savings at # years old to be $
-# that means you are ahead/behind by $ a year or $ a month
+if FV_Current > retirement_goal:
+    print("Congratulations! Based on our assumptions, you are projected to have",FV_Current-retirement_goal,"more than your original retirement goal at age", self_retirement_age)
+if FV_Current < retirement_goal:
+    print("Unfortunately at this rate, you will be",retirement_goal-FV_Current,"under your retirement goal at age", self_retirement_age)
+else:
+    print("You're right on track!")
 
-
-# product suggestion
+# Product Suggestions
 
 print("Based on your input, we would like to suggest some products to you.")
 # if have kid, offer 529
