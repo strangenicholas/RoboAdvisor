@@ -1,7 +1,6 @@
 import pandas as pd
 import time
 import numpy_financial as np
-#from Financial_Assumptions import *
 
 
 
@@ -25,308 +24,9 @@ df_female = df['Female', 'Life  expectancy']
 male_life_expectancy = df_male.to_dict()
 female_life_expectancy = df_female.to_dict()
 
+# Add Exception Handling?
 
 # Part 2:
-# Exception handling
-
-# Exception check first name
-def get_first_name(name):
-    # Checks for non-whitespace characters in the original input
-    if name.isspace() is False:
-
-        # Makes sure the name us an allowable character limit
-        while len(name) > 20:
-            name = input("You have reached the character limit. \nPlease enter your first name: ")
-
-        # Makes sure the name is entered
-        while len(name) == 0:
-            name = input("Please enter your first name: ")
-
-        # Outlines all forbidden characters
-        forbidden_characters = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '`', '~', '!', '@', '#', '$', '%',
-                                '^', '&', '*', '(', ')', '_', '=', '+', '[', '{', ']', '}', '\\', '|', ';', ':',
-                                '"', ',', '<', '.', '>', '/', '?', '-', "'"]
-
-        # Checks each element of the name against the forbidden characters
-        for character in name:
-            if character in forbidden_characters:
-                name = input(
-                    "Please refrain from entering numbers or special characters.\nPlease enter your first name: ")
-                return get_first_name(name)
-
-        # Checks for whitespace with the new inputs
-        if name.isspace() is True:
-            name = input("Please enter your first name: ")
-            return get_first_name(name)
-
-    # Corrects for whitespace in the original inputs
-    else:
-        name = input("Please enter your first name: ")
-        return get_first_name(name)
-
-    # Standardizes the return
-    return name.upper().replace(" ", "")
-
-
-# Exception check last name
-def get_last_name(name):
-    # Checks for non-whitespace characters in the original input
-    if name.isspace() is False:
-
-        # Makes sure the name us an allowable character limit
-        while len(name) > 20:
-            name = input("You have reached the character limit. \nPlease enter your last name: ")
-
-        # Makes sure the name is entered
-        while len(name) == 0:
-            name = input("Please enter your last name: ")
-
-        # Outlines all forbidden characters
-        forbidden_characters = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '`', '~', '!', '@', '#', '$', '%',
-                                '^', '&', '*', '(', ')', '_', '=', '+', '[', '{', ']', '}', '\\', '|', ';', ':',
-                                '"', ',', '<', '.', '>', '/', '?', '-', "'"]
-
-        # Checks each element of the name against the forbidden characters
-        for character in name:
-            if character in forbidden_characters:
-                name = input(
-                    "Please refrain from entering numbers or special characters.\nPlease enter your last name: ")
-                return get_last_name(name)
-
-        # Checks for whitespace with the new inputs
-        if name.isspace() is True:
-            name = input("Please enter your last name: ")
-            return get_last_name(name)
-
-    # Corrects for whitespace in the original inputs
-    else:
-        name = input("Please enter your last name: ")
-        return get_last_name(name)
-
-    # Standardizes the return
-    return name.upper().replace(" ", "")
-
-
-# Exception check age
-def get_age(age):
-    # Checks for non-whitespace characters in the original input
-    if age.isspace() is False:
-
-        # Makes sure the age is entered
-        while len(age) == 0:
-            age = input("Please enter your age: ")
-            return get_age(age)
-
-        # Outlines all forbidden characters
-        forbidden_characters = ['A', 'a', 'B', 'b', 'C', 'c', 'D', 'd', 'E', 'e', 'F', 'f', 'G', 'g', 'H', 'h',
-                                'I', 'i', 'J', 'j', 'K', 'k', 'L', 'l', 'M', 'm', 'N', 'n', 'O', 'o', 'P', 'p',
-                                'Q', 'q', 'R', 'r', 'S', 's', 'T', 't', 'U', 'u', 'V', 'v', 'W', 'w', 'X', 'x',
-                                'Y', 'y', 'Z', 'z', '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')',
-                                '_', '=', '+', '[', '{', ']', '}', '\\', '|', ';', ':', '"', ',', '<', '.', '>', '/',
-                                '?', '-', "'", " "]
-
-        # Checks each element of the age against the forbidden characters
-        for number in age:
-            if number in forbidden_characters:
-                age = input("Please refrain from entering letters, special characters, "
-                            "or spaces.\nPlease enter your age: ")
-                return get_age(age)
-
-        # Sets parameters on the age
-        if int(age) > 119:
-            age = input(
-                "You're blessed to live a long life! There's no need to continue. \nIf you would like to continue, "
-                "please enter an age less than or equal to 119: ")
-            return get_age(age)
-
-        # Checks for whitespace with the new inputs
-        if age.isspace() is True:
-            age = input("Please enter your age: ")
-            return get_age(age)
-
-    # Corrects for whitespace in the original inputs
-    else:
-        age = input("Please enter your age: ")
-        return get_age(age)
-
-    # Standardizes the return
-    return age.replace(" ", "")
-
-
-# Exception check sex
-def get_sex(sex):
-    # Checks for non-whitespace characters in the original input
-    if sex.isspace() is False:
-
-        # Removes whitespace entered
-        sex = sex.replace(" ", "")
-
-        # Sets length parameters on the input
-        while len(sex) != 1:
-            sex = input("Please enter your sex with 'm' for male or 'f' for female: ")
-            return get_sex(sex)
-
-        # Outlines all forbidden characters
-        forbidden_characters = ['A', 'a', 'B', 'b', 'C', 'c', 'D', 'd', 'E', 'e', 'G', 'g', 'H', 'h',
-                                'I', 'i', 'J', 'j', 'K', 'k', 'L', 'l', 'N', 'n', 'O', 'o', 'P', 'p',
-                                'Q', 'q', 'R', 'r', 'S', 's', 'T', 't', 'U', 'u', 'V', 'v', 'W', 'w', 'X', 'x',
-                                'Y', 'y', 'Z', 'z', '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_',
-                                '=', '+', '[', '{', ']', '}', '\\', '|', ';', ':', '"', ',', '<', '.', '>', '/', '?',
-                                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', "'"]
-
-        # Checks the sex against the forbidden characters
-        for character in sex:
-            if character in forbidden_characters:
-                sex = input("""Please enter your sex with "m" for male or "f" for female: """)
-                return get_sex(sex)
-
-        # Checks for whitespace with the new inputs
-        if sex.isspace() is True:
-            sex = input("""Please enter your sex with "m" for male or "f" for female: """)
-            return get_sex(sex)
-
-    # Corrects for whitespace in the original inputs
-    else:
-        sex = input("""Please enter your sex with "m" for male or "f" for female: """)
-        return get_sex(sex)
-
-    # Standardizes the return
-    return sex.upper()
-
-
-# Exception check retirement age
-def get_retirement_age(retirement_age):
-    # Checks for non-whitespace characters in the original input
-    if retirement_age.isspace() is False:
-
-        # Makes sure the retirement age is entered
-        while len(retirement_age) == 0:
-            retirement_age = input("Please enter your desired retirement age: ")
-            return get_retirement_age(retirement_age)
-
-        # Outlines all forbidden characters
-        forbidden_characters = ['A', 'a', 'B', 'b', 'C', 'c', 'D', 'd', 'E', 'e', 'F', 'f', 'G', 'g', 'H', 'h',
-                                'I', 'i', 'J', 'j', 'K', 'k', 'L', 'l', 'M', 'm', 'N', 'n', 'O', 'o', 'P', 'p',
-                                'Q', 'q', 'R', 'r', 'S', 's', 'T', 't', 'U', 'u', 'V', 'v', 'W', 'w', 'X', 'x',
-                                'Y', 'y', 'Z', 'z', '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')',
-                                '_', '=', '+', '[', '{', ']', '}', '\\', '|', ';', ':', '"', ',', '<', '.', '>', '/',
-                                '?', '-', "'", " "]
-
-        # Checks each element of the age against the forbidden characters
-        for number in retirement_age:
-            if number in forbidden_characters:
-                retirement_age = input("Please refrain from entering letters, special characters, or spaces."
-                                       "\nPlease enter your desired retirement age: ")
-                return get_retirement_age(retirement_age)
-
-        # Sets upper limit to retirement age
-        if int(retirement_age) > 99:
-            retirement_age = input("Woah there! I would love to be able to live and work that long,"
-                                   "but perhaps we should look to retire before age 100."
-                                   "\nPlease enter your desired retirement age: ")
-            return get_retirement_age(retirement_age)
-
-        # Checks for whitespace with the new inputs
-        if retirement_age.isspace() is True:
-            retirement_age = input("Please enter your desired retirement age: ")
-            return get_retirement_age(retirement_age)
-
-    # Corrects for whitespace in the original inputs
-    else:
-        retirement_age = input("Please enter your desired retirement age: ")
-        return get_retirement_age(retirement_age)
-
-    # Standardizes the return
-    return retirement_age.replace(" ", "")
-
-
-# Exception check current_income
-def get_current_income(current_income):
-    # Checks for non-whitespace characters in the original input
-    if current_income.isspace() is False:
-
-        # Makes sure the amount is entered
-        while len(current_income) == 0:
-            retirement_age = input('Please enter your current gross income (rounded to the nearest USD): ')
-            return get_current_income(current_income)
-
-        # Outlines all forbidden characters
-        forbidden_characters = ['A', 'a', 'B', 'b', 'C', 'c', 'D', 'd', 'E', 'e', 'F', 'f', 'G', 'g', 'H', 'h',
-                                'I', 'i', 'J', 'j', 'K', 'k', 'L', 'l', 'M', 'm', 'N', 'n', 'O', 'o', 'P', 'p',
-                                'Q', 'q', 'R', 'r', 'S', 's', 'T', 't', 'U', 'u', 'V', 'v', 'W', 'w', 'X', 'x',
-                                'Y', 'y', 'Z', 'z', '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')',
-                                '_', '=', '+', '[', '{', ']', '}', '\\', '|', ';', ':', '"', ',', '<', '.', '>', '/',
-                                '?', '-', "'", " "]
-
-        # Checks each element of the age against the forbidden characters
-        for number in current_income:
-            if number in forbidden_characters:
-                current_income = input("Please refrain from entering letters, special characters, or spaces."
-                                       '\nPlease enter your current gross income (rounded to the nearest USD): ')
-                return get_current_income(current_income)
-
-        # Sets lower limit to retirement age
-        if int(current_income) < 0:
-            current_income = input("We are sorry to hear about your situation,"
-                                   "but our calculations only work on positive amounts."
-                                   '\nPlease enter your current gross income (rounded to the nearest USD): ')
-            return get_current_income(current_income)
-
-        # Checks for whitespace with the new inputs
-        if current_income.isspace() is True:
-            current_income = input('Please enter your current gross income (rounded to the nearest USD): ')
-            return get_current_income(current_income)
-
-    # Corrects for whitespace in the original inputs
-    else:
-        current_income = input('Please enter your current gross income (rounded to the nearest USD): ')
-        return get_current_income(current_income)
-
-    # Standardizes the return
-    return current_income.replace(" ", "")
-
-# Exception check children
-def get_children(children):
-    # Checks for non-whitespace characters in the original input
-    if children.isspace() is False:
-
-        # Removes whitespace entered
-        children = children.replace(" ", "")
-
-        # Sets length parameters on the input
-        while len(children) != 1:
-            children = input("Please enter your child status with 'y' for yes or 'n' for no: ")
-            return get_children(children)
-
-        # Outlines all forbidden characters
-        forbidden_characters = ['A', 'a', 'B', 'b', 'C', 'c', 'D', 'd', 'E', 'e', 'F', 'f', 'G', 'g', 'H', 'h',
-                                'I', 'i', 'J', 'j', 'K', 'k', 'L', 'l','M', 'm', 'O', 'o', 'P', 'p',
-                                'Q', 'q', 'R', 'r', 'S', 's', 'T', 't', 'U', 'u', 'V', 'v', 'W', 'w', 'X', 'x',
-                                 'Z', 'z', '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_',
-                                '=', '+', '[', '{', ']', '}', '\\', '|', ';', ':', '"', ',', '<', '.', '>', '/', '?',
-                                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', "'"]
-
-        # Checks the answer against the forbidden characters
-        for character in children:
-            if character in forbidden_characters:
-                children = input("Please enter your child status with 'y' for yes or 'n' for no: ")
-                return get_children(children)
-
-        # Checks for whitespace with the new inputs
-        if children.isspace() is True:
-            children = input("Please enter your child status with 'y' for yes or 'n' for no: ")
-            return get_children(children)
-
-    # Corrects for whitespace in the original inputs
-    else:
-        sex = input("Please enter your child status with 'y' for yes or 'n' for no: ")
-        return get_children(children)
-
-    # Standardizes the return
-    return children.upper()
-
-
-# Part 3:
 # Calculations
 
 # Determines total life expectancy using inputs and table
@@ -434,38 +134,24 @@ print("To get started, we're going to need some personal information.")
 
 # Retrieves first name
 first_name = input("Please enter your first name: ")
-# Exception checks and updates input
-correct_first_name = first_name.replace(first_name, f"{get_first_name(first_name)}")
 
 # Retrieves last name
 last_name = input("Please enter your last name: ")
-# Exception checks and updates input
-correct_last_name = last_name.replace(last_name, f"{get_last_name(last_name)}")
 
 # Retrieves age
-self_age = input("How old are you (rounded to the nearest whole year): ")
-# Exception checks and updates input
-correct_self_age = int(self_age.replace(self_age, f"{get_age(self_age)}"))
+self_age = int(input("How old are you (rounded to the nearest whole year): "))
 
 # Retrieves sex
 self_sex = input("""What is your sex (enter "m" for male or "f" for female): """)
-# Exception checks and updates input
-correct_self_sex = self_sex.replace(self_sex, f"{get_sex(self_sex)}")
 
 # Retrieves retirement age
-self_retirement_age = input("Please enter your desired retirement age: ")
-# Exception checks and updates input
-correct_self_retirement_age = int(self_retirement_age.replace(self_retirement_age, f"{get_retirement_age(self_retirement_age)}"))
+self_retirement_age = int(input("Please enter your desired retirement age: "))
 
 # Retrieves income
 current_income = input('Please enter your current gross income (rounded to the nearest USD): ')
-# Exception checks and updates input
-correct_current_income = int(current_income.replace(current_income, f"{get_current_income(current_income)}"))
 
 # Retrieves number of children
 children = input('Do you currently have children? (y/n): ')
-# Exception checks and updates input
-correct_children = children.replace(children, f"{get_children(children)}")
 
 # Retrieves target savings goal
 retirement_goal = input('Please enter your retirement savings goal rounded to the nearest USD: ')
@@ -492,16 +178,16 @@ stock_roi = .07
 bond_roi = .05
 
 # Annual Investment
-annual_investment = correct_current_income * investment_percentage
+annual_investment = current_income * investment_percentage
 
 # Determines how many years until retirement
-yrs_to_retirement = correct_self_retirement_age - correct_self_age
+yrs_to_retirement = self_retirement_age - self_age
 
 # Calculate expected roi
 expected_roi = ((stock_allocation(yrs_to_retirement) * stock_roi) + (bond_allocation(yrs_to_retirement) * bond_roi))
 
 # Calculate current FV portfolio
-FV_Current = np.fv(expected_roi/12, yrs_to_retirement*12, -annual_investment/12,-current_savings)
+FV_Current = np.fv(expected_roi/12, yrs_to_retirement*12, -annual_investment/12)
 
 
 # Part 5:
@@ -511,11 +197,11 @@ FV_Current = np.fv(expected_roi/12, yrs_to_retirement*12, -annual_investment/12,
 print("One moment while we calculate your optimal asset allocation.")
 # Gives program a more human feel
 time.sleep(3)
-print("Hi", correct_first_name, correct_last_name)
-print("Based on your life expectancy of", life_expectancy(correct_self_sex, correct_self_age), "years")
+print("Hi", first_name, last_name)
+print("Based on your life expectancy of", life_expectancy(self_sex, self_age), "years")
 print("We suggest you invest", stock_allocation(yrs_to_retirement), "% in stocks,", bond_allocation(yrs_to_retirement),
       "% in bonds, and", cash_allocation(yrs_to_retirement), "% in cash. We calculate the ROI of this portfolio to be around",expected_roi,"%.")
-print("Based on your total income of $", correct_current_income,"and investment percentage of", investment_percentage,
+print("Based on your total income of $", current_income,"and investment percentage of", investment_percentage,
       "%, you will be investing $", annual_investment," annually")
 print("Congradulations! We calculate your portfolio balance at retirement to be $",FV_Current)
 # at this pace and an average roi of %, we calculate your expected savings at # years old to be $
