@@ -123,7 +123,7 @@ def cash_allocation(years_to_retirement):
         return 5
 
 
-# PART 4:
+# PART 3:
 # Driver code
 
 # Introduction
@@ -148,7 +148,7 @@ self_sex = input("""What is your sex (enter "m" for male or "f" for female): """
 self_retirement_age = int(input("Please enter your desired retirement age: "))
 
 # Retrieves income
-current_income = input('Please enter your current gross income (rounded to the nearest USD): ')
+current_income = int(input('Please enter your current gross income (rounded to the nearest USD): '))
 
 # Retrieves number of children
 children = input('Do you currently have children? (y/n): ')
@@ -172,6 +172,9 @@ if company_401k == 'y':
 # Roth vs Traditional 
 roth_vs_traditional = input('Do you expect to pay more in taxes during retirement than you currently are? (y,n):')
 
+
+# Part 4: Financial Calculations
+
 # Investment Assumptions
 investment_percentage = .15
 stock_roi = .07
@@ -187,7 +190,7 @@ yrs_to_retirement = self_retirement_age - self_age
 expected_roi = ((stock_allocation(yrs_to_retirement) * stock_roi) + (bond_allocation(yrs_to_retirement) * bond_roi))
 
 # Calculate current FV portfolio
-FV_Current = np.fv(expected_roi/12, yrs_to_retirement*12, -annual_investment/12)
+FV_Current = np.fv(expected_roi/12 , yrs_to_retirement*12, -annual_investment/12, -current_savings)
 
 
 # Part 5:
@@ -215,9 +218,11 @@ print("Based on your input, we would like to suggest some products to you.")
 if children == 'y':
     print('We suggest that you start contributing to a 529 plan for your children if you havent done so already')
 # if interest rate higher than today, refinance
-# if company match greater than 0, match up to mactch % or $ annually
-if company_match > 0:
+# if company match greater than 0, match up to match %
+if company_401k == 'y' and company_match > 0:
     print('We suggest you contribute at least ', company_match, 'of your salary annually to your 401k to take advatntage of your company match. ')
+else:
+    pass
 # if roth_vs_traditional == 'y' , then roth 401k/ira
 if roth_vs_traditional == 'y':
     print('Based on your future tax assumptions, we suggest you take advantage of the ROTH 401k/IRA options.')
