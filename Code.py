@@ -481,7 +481,7 @@ if housing == 'y':
 # If has 401k, Retrieves 401k % match
 company_401k = input('Does your company offer a 401k? (y,n):')
 if company_401k == 'y':
-    company_match =int(input('How much does the company match (ex: 0.05)?'))
+    company_match =int(float(input('How much does the company match (ex: 0.05)?')))
 
 # Roth vs Traditional 
 roth_vs_traditional = input('Do you expect to pay more in taxes during retirement than you currently are? (y,n):')
