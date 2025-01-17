@@ -32,9 +32,9 @@ female_life_expectancy = df_female.to_dict()
 # Determines total life expectancy using inputs and table 
 # The table is from https://www.ssa.gov/oact/STATS/table4c6.html
 def life_expectancy(sex, age):
-    if sex == "M":
+    if sex == "m":
         return male_life_expectancy[age] + age
-    if sex == "F":
+    if sex == "f":
         return female_life_expectancy[age] + age
 
 
@@ -157,7 +157,7 @@ children = input('Do you currently have children? (y/n): ')
 retirement_goal = int(input('Please enter your retirement savings goal rounded to the nearest USD: '))
 
 # Retrieves contribution rate
-contribution_rate = int(float(input('Please enter the amount you would like to contribute to retiremnr(we suggest at least 15% (ex: 0.15)): ')))
+contribution_rate = int(input('Please enter the amount you would like to contribute to retiremnt (we suggest at least 15% (ex: 15)): '))
 
 # Retrieves current retirement savings
 current_savings =int(input('Please enter your current retirement savings amount rounded to the nearest USD: '))
@@ -165,12 +165,12 @@ current_savings =int(input('Please enter your current retirement savings amount 
 # Retrieves house status
 housing = input('Do you currently own a home? (y,n):')
 if housing == 'y':
-    mortgage_rate = input('What is your current interest rate?')
+    mortgage_rate = float(input('What is your current interest rate? (ex: 6.5)'))
 
 # If has 401k, Retrieves 401k % match
 company_401k = input('Does your company offer a 401k? (y,n):')
 if company_401k == 'y':
-    company_match =int(float(input('How much does the company match (ex: 0.05)?')))
+    company_match = float(input('How much does the company match (ex: 5)?'))
 
 # Roth vs Traditional 
 roth_vs_traditional = input('Do you expect to pay more in taxes during retirement than you currently are? (y,n):')
@@ -183,7 +183,7 @@ stock_roi = .07
 bond_roi = .05
 
 # Annual Investment
-annual_investment = current_income * contribution_rate
+annual_investment = current_income * (contribution_rate/100)
 
 # Determines how many years until retirement
 yrs_to_retirement = self_retirement_age - self_age
@@ -205,14 +205,14 @@ print("Hi", first_name, last_name)
 print("Based on your life expectancy of", life_expectancy(self_sex, self_age), "years")
 print("We suggest you invest", stock_allocation(yrs_to_retirement), "% in stocks,", bond_allocation(yrs_to_retirement),
       "% in bonds, and", cash_allocation(yrs_to_retirement), "% in cash. We calculate the ROI of this portfolio to be around",round(expected_roi*100,2) ,"%.")
-print("Based on your total income of $", current_income,"and investment percentage of", contribution_rate,
-      "%, you will be investing $", annual_investment," annually")
-print("Wow! We calculate your portfolio balance at retirement to be $",FV_Current)
+print("Based on your total income of $", f"${current_income:,.2f}","and investment percentage of", contribution_rate,
+      "%, you will be investing $", f"${annual_investment:,.2f}"," annually")
+print("Wow! We calculate your portfolio balance at retirement to be $",f"${FV_Current:,.2f}")
 # at this pace and an average roi of %, we calculate your expected savings at # years old to be $
 if FV_Current > retirement_goal:
-    print("Congratulations! Based on our assumptions, you are projected to have",FV_Current-retirement_goal,"more than your original retirement goal at age", self_retirement_age)
+    print("Congratulations! Based on our assumptions, you are projected to have",f"${FV_Current-retirement_goal:,.2f}","more than your original retirement goal at age", self_retirement_age)
 if FV_Current < retirement_goal:
-    print("Unfortunately at this rate, you will be",retirement_goal-FV_Current,"under your retirement goal at age", self_retirement_age)
+    print("Unfortunately at this rate, you will be",f"${retirement_goal-FV_Current:,.2f}","under your retirement goal at age", self_retirement_age)
 else:
     print("You're right on track!")
 
